@@ -1,66 +1,68 @@
 # Operating-Systems-Concepts-Practical-Exercises
 
-## Brief exercise description
+## Chapter-wise experiment and project organization
 
-### Chapter 2 - OS structures
-* **2.24**
-    * A simple program which copies the contents of a file to another file.
+The repository contains **selected practical exercises and projects**, not a
+complete coding implementation of every chapter or every subsection of the
+*Operating System Concepts* textbook.
 
-* **2.4**
-    * A simple linux kernel module that creates a new entry in the `/proc` file-system that reports the number of seconds since the kernel module was loaded.
+The following tables use a consistent format to show the experiments and
+projects that are **already available** in the original repository and are
+being reimplemented in Python.
 
-### Chapter 3 - Processes
-* **3.19**
-    * A program that measures the amount of time necessary to run a command from the command line. The given command is being run in a child process.
-    * `time_pipe.c` - implements the communication between the two processes using a pipe.
-    * `time_shared_memory.c` - implements the communication between the two processes using shared memory.
+### Chapter 2 — Operating-System Structures
 
-* **3.20**
-    * Implements a basic API to allocate and release a process id using a bitmap.
+| Experiment / Project | Practical focus |
+|---|---|
+| **2.24** | File copying — copy the contents of one file to another file. |
+| **2.4** | Linux `/proc` kernel module — create a `/proc` entry that reports the number of seconds since the kernel module was loaded. |
 
-* **3.21**
-    * A program that generates the Collatz sequence of a given number in a child process.
+### Chapter 3 — Processes
 
-* **3.22**
-    * Same as **3.21**, but the child process saves the sequence in a shared-memory object.
+| Experiment / Project | Practical focus |
+|---|---|
+| **3.19** | Process execution and timing — measure the time required to execute a command in a child process. Includes pipe-based and shared-memory communication variants. |
+| **3.20** | Process ID management — allocate and release process IDs using a bitmap. |
+| **3.21** | Process creation — generate the Collatz sequence in a child process. |
+| **3.22** | Process creation and shared memory — generate the Collatz sequence in a child process and store the sequence in shared memory. |
+| **3.26** | Inter-process communication — exchange messages between two processes using ordinary pipes. |
+| **3.27** | Pipe-based file transfer — copy a file using ordinary pipes. |
+| **UNIX Shell** | Shell implementation — execute commands in separate processes and support input/output redirection and pipes. |
+| **Linux Kernel Module for Task Information** | Linux process information — use `/proc` to display information associated with a process ID. |
+| **Linux Kernel Module for Listing Tasks** | Linux task traversal — list system tasks using linear and depth-first traversal approaches. |
+| **Kernel Data Structures** | Kernel-style data structures — demonstrate use of a linked-list structure similar to the Linux kernel list implementation. |
 
-* **3.26**
-    * A program containing a short message exchange between two processes using ordinary pipes.
+### Chapter 4 — Threads and Concurrency
 
-* **3.27**
-    * A file-copying program using ordinary pipes.
+| Experiment / Project | Practical focus |
+|---|---|
+| **4.22** | Multithreading and statistics — compute statistical values for an array using multiple threads. |
+| **4.24** | Multithreading and Monte Carlo — approximate the value of π using the Monte Carlo technique and multiple threads. |
+| **Sudoku Solution Validator** | Concurrent validation — validate Sudoku rows, columns, and 3×3 regions using separate threads. |
+| **Multithreaded Sorting Application** | Parallel sorting — implement merge sort using multithreading and compare single-threaded and multithreaded execution. |
 
-* **UNIX Shell**
-    * A program to serve as a shell interface that accepts user commands and then executes each command in a separate process.
-    * It supports input and output redirections, as well as pipes as a form of inter-process communication between commands. However, a command may contain only one redirection or pipe - I plan on extending this functionality in the future.
+### Chapter 5 — CPU Scheduling
 
-* **Linux Kernel Module for Task Information**
-    * A kernel module that uses the `/proc` file-system for displaying a task's information based on its process id.
+| Experiment / Project | Practical focus |
+|---|---|
+| **No existing experiment** | No Chapter 5 coding directory is currently present in the original available exercise set. Recommended CPU-scheduling simulations are provided separately under `Recommended-Python-Labs/`. |
 
-* **Linux Kernel Module for Listing Tasks**
-    * A kernel module that lists all tasks in a Linux system. This is implemented both linearly and depth first.
+### Chapter 6 — Synchronization Tools
 
-* **Kernel Data Structures**
-    * A project which consists in using the kernel linked list structure.
+| Experiment / Project | Practical focus |
+|---|---|
+| **6.33** | Mutual exclusion and finite resources — examine synchronization requirements associated with concurrent access to a finite set of resources. |
 
-### Chapter 4 - Threads & Concurrency
-* **4.22**
-    * A multithreaded program which computes statistical values for an array of numbers
+### Coverage note
 
-* **4.24**
-    * A multithreaded program which uses the Monte Carlo technique to approximate the value of pi.
+The tables above describe **the coding content currently available in this
+repository**. They do not represent all concepts, subsections, exercises, or
+programming projects contained in the textbook.
 
-* **Sudoku Solution Validator**
-    * A program which checks whether a given sudoku solution is valid or not.
-    * The validation for each separate row, column and 3x3 square is done in a separate thread.
-
-* **Multithreaded sorting application**
-    * A version of merge-sort which makes use of multithreading.
-    * **Results**: you can literally see the speedup between sorting the array using 1 thread and using multiple threads. On my PC, the multithreaded version ran ~4 times faster.
-
-### Chapter 6 - Synchronization Tools
-* **6.33**
-    * Mutual exclusion and finite resources
+For topics without an existing coding directory, additional Python
+laboratories and simulations are provided separately under
+`Recommended-Python-Labs/`. These are **newly designed educational
+simulations**, not conversions of an existing C program.
 
 ## Recommended Python Labs and Simulations — Chapters 7–21
 
@@ -81,14 +83,13 @@ Structure, I/O Systems, File-System Interface, File-System Implementation,
 File-System Internals, Security, Protection, Virtual Machines, Networks and
 Distributed Systems, The Linux System, and Windows 10 respectively.
 
-
 ---
 
 ### Chapter 7 — Synchronization Examples
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -107,7 +108,7 @@ mechanism is required.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -123,7 +124,7 @@ mechanism is required.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -139,7 +140,7 @@ mechanism is required.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -156,7 +157,7 @@ mechanism is required.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -173,7 +174,7 @@ mechanism is required.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -189,7 +190,7 @@ mechanism is required.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -204,7 +205,7 @@ mechanism is required.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -221,7 +222,7 @@ mechanism is required.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -237,7 +238,7 @@ mechanism is required.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -255,7 +256,7 @@ mechanism is required.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -271,7 +272,7 @@ mechanism is required.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -291,7 +292,7 @@ platform-dependent.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -312,7 +313,7 @@ dependence on a particular network stack or operating system.
 appear under the Chapter 3 process material, including `/proc`-based task
 information and task listing.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -332,7 +333,7 @@ Linux facilities rather than becoming kernel modules.
 
 **Existing C experiment:** None currently available.
 
-**New Python Labs:**
+**Recommended Python Labs:**
 
 | Lab | Practical focus |
 |---|---|
@@ -357,7 +358,7 @@ C-reference-based programs already present in Chapters 2–6.
 | Type | Meaning |
 |---|---|
 | **Existing / Converted** | A coding exercise already present in the original repository has been reimplemented in Python. |
-| **New** | A new Python practical has been designed to make an OS concept experimentally observable. |
+| **Recommended / Simulation** | A new Python practical has been designed to make an OS concept experimentally observable. |
 | **Platform-specific** | The practical depends on Linux, Windows, or another OS facility. |
 | **OS-independent** | The practical is a Python simulation that can generally run across operating systems. |
 
