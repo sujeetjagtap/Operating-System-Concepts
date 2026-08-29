@@ -58,6 +58,316 @@
     * A version of merge-sort which makes use of multithreading.
     * **Results**: you can literally see the speedup between sorting the array using 1 thread and using multiple threads. On my PC, the multithreaded version ran ~4 times faster.
 
+### Chapter 6 - Synchronization Tools
+* **6.33**
+    * Mutual exclusion and finite resources
+
+## Recommended Python Labs and Simulations — Chapters 7–21
+
+The textbook contains many more chapters and concepts than are represented by
+the existing coding directories in this repository. The following sections
+provide **recommended Python laboratories and simulations** for Chapters 7–21
+where no corresponding implementation is currently available in the existing
+C-derived exercise set.
+
+These are **newly designed educational labs**, not claims that the original
+repository contains C implementations for these topics. They are intentionally
+separated from the existing converted exercises.
+
+The chapter names below follow the structure of *Operating System Concepts,
+10th Edition*. The official textbook site lists Chapters 7–21 as
+Synchronization Examples, Deadlocks, Main Memory, Virtual Memory, Mass-Storage
+Structure, I/O Systems, File-System Interface, File-System Implementation,
+File-System Internals, Security, Protection, Virtual Machines, Networks and
+Distributed Systems, The Linux System, and Windows 10 respectively.
+
+
+---
+
+### Chapter 7 — Synchronization Examples
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **7.01 — Bounded Buffer / Producer-Consumer** | Implement the bounded-buffer problem using Python threads, locks, semaphores, and condition variables. |
+| **7.02 — Readers-Writers Problem** | Simulate concurrent readers and writers accessing shared data and compare synchronization strategies. |
+| **7.03 — Dining Philosophers** | Demonstrate competing threads, resource contention, deadlock, and deadlock-avoidance strategies. |
+| **7.04 — Synchronization Mechanism Comparison** | Compare mutex locks, semaphores, and condition variables for selected synchronization problems. |
+
+**Suggested outcome:** Students should be able to select an appropriate
+synchronization mechanism for a concurrent problem and explain why the
+mechanism is required.
+
+---
+
+### Chapter 8 — Deadlocks
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **8.01 — Resource-Allocation Graph** | Construct and analyze resource-allocation graphs to identify potential deadlocks. |
+| **8.02 — Banker's Algorithm** | Implement the safety algorithm and resource-request algorithm for deadlock avoidance. |
+| **8.03 — Deadlock Detection** | Simulate multiple processes competing for resources and detect unsafe/deadlocked states. |
+| **8.04 — Deadlock Prevention by Resource Ordering** | Demonstrate how imposing a global ordering on resources prevents circular wait. |
+| **8.05 — Deadlock Recovery Simulation** | Simulate termination and resource-preemption strategies for recovering from deadlock. |
+
+---
+
+### Chapter 9 — Main Memory
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **9.01 — Fixed Partition Allocation** | Simulate fixed-partition memory allocation and calculate internal fragmentation. |
+| **9.02 — First-Fit / Best-Fit / Worst-Fit** | Compare dynamic partition allocation strategies using identical memory workloads. |
+| **9.03 — Paging Simulation** | Simulate pages, frames, page tables, and logical-to-physical address translation. |
+| **9.04 — Segmentation Simulation** | Model segment tables and perform logical-address validation and translation. |
+| **9.05 — Fragmentation Analysis** | Compare internal and external fragmentation under different allocation strategies. |
+
+---
+
+### Chapter 10 — Virtual Memory
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **10.01 — FIFO Page Replacement** | Simulate FIFO page replacement and calculate page faults. |
+| **10.02 — LRU Page Replacement** | Simulate Least Recently Used replacement for a given reference string. |
+| **10.03 — Optimal Page Replacement** | Implement the theoretical optimal algorithm as a benchmark. |
+| **10.04 — Page Replacement Comparison** | Compare FIFO, LRU, and Optimal algorithms for the same workloads. |
+| **10.05 — Thrashing Simulation** | Demonstrate how insufficient frames and working-set behavior can increase page faults. |
+| **10.06 — Working-Set Model** | Simulate working sets and examine locality of reference. |
+
+---
+
+### Chapter 11 — Mass-Storage Structure
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **11.01 — FCFS Disk Scheduling** | Calculate disk-head movement for a sequence of requests. |
+| **11.02 — SSTF Disk Scheduling** | Implement Shortest Seek Time First and compare it with FCFS. |
+| **11.03 — SCAN / C-SCAN** | Simulate elevator-style disk scheduling algorithms. |
+| **11.04 — LOOK / C-LOOK** | Compare LOOK variants with SCAN-based scheduling. |
+| **11.05 — Disk Scheduling Comparison** | Compare all major disk-scheduling strategies using identical workloads. |
+| **11.06 — Disk Access-Time Simulation** | Model seek time, rotational latency, and transfer time. |
+
+---
+
+### Chapter 12 — I/O Systems
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **12.01 — I/O Request Scheduling** | Simulate an I/O request queue and compare service policies. |
+| **12.02 — Buffering Simulation** | Demonstrate single, double, and circular buffering using producer-consumer workloads. |
+| **12.03 — Caching Simulation** | Model cache hits, misses, replacement, and locality. |
+| **12.04 — Spooling Simulation** | Simulate a spool queue between producers and a slow device. |
+| **12.05 — I/O Performance Analysis** | Compare throughput and latency under different buffering and scheduling policies. |
+
+---
+
+### Chapter 13 — File-System Interface
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **13.01 — File and Directory Operations** | Implement create, open, read, write, rename, copy, and delete operations using Python file APIs. |
+| **13.02 — Directory Tree Traversal** | Build and traverse a hierarchical directory structure. |
+| **13.03 — File-System Navigation** | Implement path resolution, directory listing, and relative/absolute path handling. |
+| **13.04 — File Metadata Explorer** | Examine permissions, timestamps, size, and other file metadata. |
+
+---
+
+### Chapter 14 — File-System Implementation
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **14.01 — Contiguous File Allocation** | Simulate contiguous allocation and measure fragmentation and access characteristics. |
+| **14.02 — Linked File Allocation** | Simulate linked allocation and compare sequential/random access behavior. |
+| **14.03 — Indexed File Allocation** | Implement an index-block model for file allocation. |
+| **14.04 — File Allocation Comparison** | Compare contiguous, linked, and indexed allocation. |
+| **14.05 — Free-Space Bitmap** | Implement bitmap-based free-space management. |
+| **14.06 — Free-List Management** | Simulate linked free-space lists and allocation/deallocation operations. |
+
+---
+
+### Chapter 15 — File-System Internals
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **15.01 — File-System Cache** | Simulate cache hits/misses for different file-access patterns. |
+| **15.02 — Buffer Cache Replacement** | Compare simple cache replacement policies. |
+| **15.03 — Journaling Simulation** | Model a write-ahead journal and replay operations after a simulated crash. |
+| **15.04 — Crash Recovery** | Demonstrate consistency recovery after incomplete file-system operations. |
+| **15.05 — Inode-Style Metadata Simulation** | Model file metadata and block references using Python data structures. |
+
+---
+
+### Chapter 16 — Security
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **16.01 — Password Hashing and Verification** | Demonstrate salted password hashing and secure verification. |
+| **16.02 — Access-Control Simulation** | Model users, resources, permissions, and authorization decisions. |
+| **16.03 — Authentication Simulation** | Implement a simple authentication workflow with account and credential management. |
+| **16.04 — Security Policy Evaluation** | Evaluate access requests against configurable security policies. |
+
+> These exercises are intended for defensive and educational use. They do not
+> involve password cracking or unauthorized access.
+
+---
+
+### Chapter 17 — Protection
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **17.01 — Protection Access Matrix** | Implement subjects, objects, and rights using an access matrix. |
+| **17.02 — Access-Control Lists** | Derive and query ACL-style representations from an access matrix. |
+| **17.03 — Capability Lists** | Implement capability-based access to resources. |
+| **17.04 — Capability Revocation** | Simulate granting and revoking capabilities. |
+| **17.05 — Protection-Domain Simulation** | Model domain switching and permitted operations. |
+
+---
+
+### Chapter 18 — Virtual Machines
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **18.01 — Toy Virtual Machine** | Build a small user-space VM with virtual registers, memory, instructions, and a fetch-decode-execute cycle. |
+| **18.02 — VM Instruction Set** | Design and execute a small educational instruction set. |
+| **18.03 — VM Resource Allocation** | Simulate CPU, memory, and I/O resource allocation among virtual machines. |
+| **18.04 — Virtual Machine Isolation** | Demonstrate how separate virtual memory/state spaces can isolate simulated workloads. |
+
+**Platform note:** These are intentionally **OS-independent simulations**.
+They do not attempt to control KVM, Hyper-V, VMware, VirtualBox, or hardware
+virtualization directly. A real hypervisor/API implementation would be
+platform-dependent.
+
+---
+
+### Chapter 19 — Networks and Distributed Systems
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **19.01 — Lamport Logical Clocks** | Simulate logical clocks and happened-before relationships among distributed processes. |
+| **19.02 — Vector Clock Simulation** | Extend logical-clock modeling using vector clocks. |
+| **19.03 — Distributed Mutual Exclusion** | Simulate a message-based mutual-exclusion protocol. |
+| **19.04 — Leader Election** | Simulate a simple distributed leader-election algorithm. |
+| **19.05 — Reliable Message Delivery** | Simulate message loss, retransmission, ordering, and acknowledgements. |
+
+These can initially be implemented as **user-space simulations**, avoiding
+dependence on a particular network stack or operating system.
+
+---
+
+### Chapter 20 — The Linux System
+
+**Existing C experiments:** Several Linux-specific projects already
+appear under the Chapter 3 process material, including `/proc`-based task
+information and task listing.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **20.01 — Linux `/proc` Process Monitor** | Inspect process information exposed through `/proc`. |
+| **20.02 — Linux System Resource Monitor** | Read CPU, memory, process, and system statistics from Linux interfaces. |
+| **20.03 — Linux Process Hierarchy Explorer** | Build a parent-child process tree from `/proc`. |
+| **20.04 — Linux File Descriptor Explorer** | Inspect process file descriptors through Linux `/proc` interfaces. |
+| **20.05 — Linux System Call Observation** | Design a controlled demonstration around observable system-call behavior where suitable tools are available. |
+
+**Platform note:** These exercises are **Linux-specific** and should be run on
+Linux. Python itself remains a user-space language; these programs inspect
+Linux facilities rather than becoming kernel modules.
+
+---
+
+### Chapter 21 — Windows 10
+
+**Existing C experiment:** None currently available.
+
+**New Python Labs:**
+
+| Lab | Practical focus |
+|---|---|
+| **21.01 — Windows Process and Thread Explorer** | Explore process/thread information using Python-accessible Windows facilities. |
+| **21.02 — Windows File-System Demonstration** | Examine Windows-specific file-system behavior using Python APIs. |
+| **21.03 — Windows Service Observation** | Observe configured Windows services through supported user-space mechanisms. |
+| **21.04 — Windows Resource Monitoring** | Build a basic process/resource monitoring demonstration using available Windows interfaces. |
+
+**Platform note:** These exercises are intended for **Windows**. Where Python
+standard-library facilities do not expose a Windows-specific mechanism, the
+README for the experiment should identify the required platform API or
+supported tool.
+
+---
+
+### Recommended-lab status
+
+The experiments in Chapters 7–21 above are **recommended additions to the
+laboratory curriculum**. They should be treated differently from the
+C-reference-based programs already present in Chapters 2–6.
+
+| Type | Meaning |
+|---|---|
+| **Existing / Converted** | A coding exercise already present in the original repository has been reimplemented in Python. |
+| **New** | A new Python practical has been designed to make an OS concept experimentally observable. |
+| **Platform-specific** | The practical depends on Linux, Windows, or another OS facility. |
+| **OS-independent** | The practical is a Python simulation that can generally run across operating systems. |
+
+This distinction is intentional. The official *Operating System Concepts,
+10th Edition* structure contains Chapters 7–21 covering synchronization,
+deadlocks, memory, storage, file systems, security/protection, virtualization,
+distributed systems, and Linux/Windows case studies, but the presence of a
+chapter in the textbook does **not** imply that this repository originally
+contained source code for every topic.
+
 ## Python conversion
 
 The Python implementations in this repository are **derived from the original C implementations** provided for the Operating Systems practical exercises.
@@ -213,7 +523,13 @@ python -m compileall .
 
 ### Platform-specific OS exercises
 
-Some original exercises model Linux kernel facilities. Ordinary Python runs in user space and cannot itself be a loadable Linux kernel module. The converted repository therefore uses documented **user-space analogues**, such as Linux `/proc`, elapsed-time APIs, and Python data structures. Exercises that explicitly depend on `/proc` should be run on Linux. Windows and macOS do not provide the same Linux `/proc` interface.
+Some existing exercises model Linux kernel facilities. Ordinary Python runs in
+user space and cannot itself be a loadable Linux kernel module. The converted
+repository therefore uses documented **user-space adaptations**, such as Linux
+`/proc`, elapsed-time APIs, and Python data structures.
+
+Some of the recommended labs are also platform-specific. Their individual
+README files identify whether Linux, Windows, or another platform is required.
 
 ### Recommended student workflow
 
