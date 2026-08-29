@@ -1,13 +1,5 @@
 # Operating-Systems-Concepts-Practical-Exercises
 
-This repository contains my solutions in C to the practical exercises in the 1oth version of the "Operating System Concepts" book by Abraham Silberschatz, Greg Gagne and Peter B. Galvin.
-
-I have been passioned by operating systems for some time and decided to go through this book on my own and solve most of the coding challenges along the way. Each solved exercise has its own subfolder.
-
-Please note that I do not guarantee that my solutions are necessarily optimal. I am still learning.
-
-You can find a brief description for each solved exercise/project down below. Most of the exercises (will) have their own README in their own subfolder, where more specific details are provided.
-
 ## Brief exercise description
 
 ### Chapter 2 - OS structures
