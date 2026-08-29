@@ -58,16 +58,42 @@
     * A version of merge-sort which makes use of multithreading.
     * **Results**: you can literally see the speedup between sorting the array using 1 thread and using multiple threads. On my PC, the multithreaded version ran ~4 times faster.
 
-
-
-
 ## Python conversion
 
-A Python 3 translation has been added alongside the original C source in every exercise/project directory. The C files are retained for side-by-side study.
+The Python implementations in this repository are **derived from the original C implementations** provided for the Operating Systems practical exercises.
 
-### Important portability note
+The original C programs are used as the **reference implementations** for understanding the problem requirements, algorithmic approach, operating-system concepts, input/output behavior, and intended program functionality. Each applicable C program is reimplemented in **Python 3**, adapting the implementation to Python's programming model and standard library.
 
-The original repository contains several Linux kernel modules. Ordinary Python programs execute in user space and cannot replace a loadable kernel module. For those exercises, the Python files are explicitly implemented as **user-space analogues** using Linux `/proc`, Python linked structures, or elapsed-time APIs where appropriate. This preserves the operating-systems concept and observable behavior without pretending that Python is a kernel-module language.
+The purpose of the conversion is not merely to provide a separate Python solution, but to demonstrate how the **same Operating Systems concepts and practical problems can be implemented using Python**.
+
+Where applicable, the Python implementation preserves:
+
+- The original practical problem/question
+- The underlying Operating Systems concept
+- The major algorithm or approach used in the C implementation
+- The expected input and output behavior
+- The relevant process, thread, synchronization, IPC, file-system, or resource-management concepts
+
+The original C source files are also retained in the repository for **side-by-side comparison and academic reference**.
+
+### Important portability and kernel-module note
+
+Some exercises in the original repository are implemented as **Linux kernel modules**. These cannot be directly translated into ordinary Python programs because Python programs execute in user space and cannot themselves serve as loadable Linux kernel modules.
+
+For these exercises, the Python versions are therefore **user-space adaptations based on the original C/kernel-module implementation and the same Operating Systems concept**.
+
+Depending on the exercise, the Python implementation uses appropriate user-space mechanisms such as:
+
+- Linux `/proc` for obtaining process/task information
+- Python process and threading facilities
+- Python data structures to represent kernel-style structures
+- Python timing facilities to reproduce observable timing behavior
+
+These implementations preserve the **educational objective and observable functionality** of the original exercise while acknowledging the architectural difference between C kernel code and Python user-space code.
+
+Consequently, the Python versions should be understood as:
+
+> **C-reference-based Python implementations for regular programs, and conceptually equivalent user-space adaptations for Linux kernel-module exercises.**
 
 ### Python 3 setup and dependencies
 
@@ -210,27 +236,21 @@ Some original exercises model Linux kernel facilities. Ordinary Python runs in u
 
 ## One-command setup
 
-The repository includes small setup scripts for students who want an automated
-virtual-environment setup.
+The repository includes platform-specific setup scripts in the `setup/`
+directory. These scripts create the `.venv` virtual environment in the
+**repository root**, upgrade `pip`, and install packages from `requirements.txt`.
+
+> **Important:** Run these commands from the repository root, not from inside
+> the `setup/` directory.
 
 ### Linux / macOS / BSD
 
-From the repository root:
-
 ```bash
-chmod +x setup.sh
-./setup.sh
+chmod +x setup/setup.sh
+./setup/setup.sh
 ```
 
-The script:
-
-1. Detects `python3` (or `python` where appropriate).
-2. Creates `.venv`.
-3. Upgrades `pip`.
-4. Installs packages from `requirements.txt`.
-5. Leaves the environment ready for the laboratory exercises.
-
-Activate it in a new terminal with:
+Activate the environment:
 
 ```bash
 source .venv/bin/activate
@@ -238,13 +258,11 @@ source .venv/bin/activate
 
 ### Windows PowerShell
 
-From the repository root:
-
 ```powershell
-.\setup.ps1
+.\setup\setup.ps1
 ```
 
-Then activate:
+Activate:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
@@ -252,13 +270,11 @@ Then activate:
 
 ### Windows Command Prompt
 
-Run:
-
 ```cmd
-setup.bat
+setup\setup.bat
 ```
 
-Then activate:
+Activate:
 
 ```cmd
 .venv\Scripts\activate.bat
@@ -283,10 +299,10 @@ py -m venv .venv
 
 The current laboratory programs rely on the **Python standard library**, so
 `requirements.txt` is intentionally empty of third-party runtime packages.
-This means the setup scripts do not download unnecessary libraries.
-
 If a future exercise introduces a third-party dependency, add it to
 `requirements.txt`; the setup scripts will install it automatically.
+
+See [`setup/README.md`](setup/README.md) for the complete setup instructions.
 
 ## Running the programs
 
