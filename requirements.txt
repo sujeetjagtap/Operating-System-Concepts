@@ -1,0 +1,4 @@
+# Operating Systems Lab Python dependencies
+#
+# The laboratory implementations use Python's standard library.
+# No third-party packages are required for the core exercises.
