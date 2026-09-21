@@ -1,6 +1,6 @@
 # Operating Systems Lab
 
-## Environment Setup and Practice Guide for Experiments 1--4
+## Environment Setup for Introductory Lab
 
 This guide prepares your computer to practise all four Operating Systems
 laboratory experiments using either:
@@ -19,16 +19,27 @@ The four experiments are:
 
 # 1. What You Need
 
-| Requirement | Windows | macOS |
-|---|---|---|
-| Terminal | Windows Terminal / Ubuntu terminal | Terminal |
-| UNIX/Linux environment | WSL 2 + Ubuntu | macOS Terminal |
-| Shell | Bash | zsh/bash |
-| C compiler | GCC | Clang |
-| Text editor | `vi`/`vim`, optional VS Code | `vi`/`vim`, optional VS Code |
-| Manual pages | `man` | `man` |
-| Calculator | `bc` | `bc` |
-| Shell scripting | Bash | Bash/zsh |
+  -----------------------------------------------------------------------
+  Requirement             Windows                 macOS
+  ----------------------- ----------------------- -----------------------
+  Terminal                Windows Terminal /      Terminal
+                          Ubuntu terminal         
+
+  UNIX/Linux environment  WSL 2 + Ubuntu          macOS Terminal
+
+  Shell                   Bash                    zsh/bash
+
+  C compiler              GCC                     Clang
+
+  Text editor             `vi`/`vim`, optional VS `vi`/`vim`, optional VS
+                          Code                    Code
+
+  Manual pages            `man`                   `man`
+
+  Calculator              `bc`                    `bc`
+
+  Shell scripting         Bash                    Bash/zsh
+  -----------------------------------------------------------------------
 
 You do **not** need a separate virtual machine or dual-boot installation
 for these laboratory exercises.
@@ -1027,26 +1038,26 @@ is optional.
 Most commands used in Experiments 1--4 are UNIX/Linux commands and
 behave similarly in WSL and macOS.
 
-| Activity | WSL / Ubuntu | macOS |
-|---|---|---|
-| Shell | Bash | zsh by default |
-| C compiler | `gcc` | `clang` |
-| `ls` | Yes | Yes |
-| `grep` | Yes | Yes |
-| `cat` | Yes | Yes |
-| `cp` | Yes | Yes |
-| `mv` | Yes | Yes |
-| `rm` | Yes | Yes |
-| `cut` | Yes | Yes |
-| `head` | Yes | Yes |
-| `tail` | Yes | Yes |
-| `wc` | Yes | Yes |
-| `bc` | Yes | Yes |
-| `vi` | Usually available | Available |
-| `man` | Available after packages are installed | Available |
-| `fork()` | Yes | Yes |
-| `opendir()` / `readdir()` | Yes | Yes |
-| Bash scripts | Yes | Yes |
+  Activity                    WSL / Ubuntu                             macOS
+  --------------------------- ---------------------------------------- ----------------
+  Shell                       Bash                                     zsh by default
+  C compiler                  `gcc`                                    `clang`
+  `ls`                        Yes                                      Yes
+  `grep`                      Yes                                      Yes
+  `cat`                       Yes                                      Yes
+  `cp`                        Yes                                      Yes
+  `mv`                        Yes                                      Yes
+  `rm`                        Yes                                      Yes
+  `cut`                       Yes                                      Yes
+  `head`                      Yes                                      Yes
+  `tail`                      Yes                                      Yes
+  `wc`                        Yes                                      Yes
+  `bc`                        Yes                                      Yes
+  `vi`                        Usually available                        Available
+  `man`                       Available after packages are installed   Available
+  `fork()`                    Yes                                      Yes
+  `opendir()` / `readdir()`   Yes                                      Yes
+  Bash scripts                Yes                                      Yes
 
 ------------------------------------------------------------------------
 
