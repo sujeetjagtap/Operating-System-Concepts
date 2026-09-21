@@ -1,6 +1,6 @@
 # Operating Systems Lab
 
-## Environment Setup and Practice Guide for Experiments 1--4
+## Environment Setup for Introductory Lab
 
 This guide prepares your computer to practise all four Operating Systems
 laboratory experiments using either:
