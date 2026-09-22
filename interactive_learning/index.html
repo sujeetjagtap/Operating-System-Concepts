@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operating Systems — Interactive Learning: Chapters 3–8</title>
+<style>
+:root{
+  --bg:#f6f8fb; --card:#fff; --ink:#172033; --muted:#5e6b82;
+  --line:#dce3ee; --accent:#3559d8; --accent2:#6b46c1; --good:#16834b;
+  --warn:#b26a00; --bad:#c83d4f; --dark:#1d2638;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header{background:linear-gradient(135deg,#18243a,#334b9b);color:white;padding:48px 22px 36px}
+header .wrap, main, footer{max-width:1180px;margin:auto}
+h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.08;margin:0 0 12px}
+h2{margin-top:0;font-size:1.75rem}
+h3{margin-bottom:.35rem}
+header p{max-width:850px;color:#e7ecff;font-size:1.05rem}
+.badge{display:inline-block;background:#ffffff20;border:1px solid #ffffff35;border-radius:999px;padding:5px 11px;margin:4px 5px 4px 0;font-size:.85rem}
+nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 12px #17203312}
+.navin{max-width:1180px;margin:auto;display:flex;gap:7px;overflow:auto;padding:9px 12px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--ink);padding:7px 11px;border-radius:9px;font-size:.9rem}
+nav a:hover{background:#eef2ff;color:var(--accent)}
+main{padding:30px 18px 70px}
+section{margin:34px 0;scroll-margin-top:70px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:14px 0;box-shadow:0 5px 18px #1720330a}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}
+.callout{border-left:5px solid var(--accent);background:#eef2ff;padding:13px 16px;border-radius:10px}
+.good{border-left-color:var(--good);background:#edf9f2}.warn{border-left-color:var(--warn);background:#fff6e8}
+button,select,input{font:inherit}
+button{border:0;background:var(--accent);color:white;padding:9px 13px;border-radius:9px;cursor:pointer}
+button.secondary{background:#e9edf7;color:var(--ink)}
+button:hover{filter:brightness(.95)}
+select,input[type=number]{border:1px solid var(--line);padding:8px;border-radius:8px;background:#fff}
+.small{font-size:.9rem;color:var(--muted)}
+code{background:#eef1f6;padding:2px 5px;border-radius:5px}
+pre{background:#151c2c;color:#e9efff;padding:15px;border-radius:10px;overflow:auto}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:#f0f3f9}
+.pill{display:inline-block;padding:3px 8px;border-radius:999px;background:#edf1ff;color:#3048a4;font-size:.8rem;margin:2px}
+.progress{height:10px;background:#e7ebf2;border-radius:20px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.scene{position:relative;height:110px;background:#f4f6fa;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:10px 0}
+.packet,.cpuDot,.runner,.lockDot{position:absolute;width:30px;height:30px;border-radius:7px;display:grid;place-items:center;font-size:.75rem;font-weight:700}
+.packet{background:#dfe7ff;color:#2942a4;top:39px;animation:packetMove 3s infinite}
+@keyframes packetMove{0%{left:5%}45%{left:46%}100%{left:90%}}
+.cpuDot{background:#dff5e8;color:#167143;top:40px;animation:cpuPulse 1.2s infinite}
+@keyframes cpuPulse{0%,100%{transform:scale(.85);opacity:.65}50%{transform:scale(1.1);opacity:1}}
+.runner{background:#ffe6bd;color:#8a5200;top:40px;animation:run 2.8s infinite}
+@keyframes run{0%{left:5%}45%{left:45%}50%{left:45%}100%{left:90%}}
+.lockDot{background:#ffdfe4;color:#9c2638;top:40px}
+.arrow{color:var(--muted);font-size:.85rem}
+.state-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.state{padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#fff}
+.state.active{background:#dfe7ff;border-color:#9bb0ff;color:#263fa0;font-weight:700}
+.token{padding:8px 10px;border-radius:8px;background:#f0f2f6;margin:4px;display:inline-block}
+.gantt{display:flex;min-height:48px;border:1px solid var(--line);overflow:hidden;border-radius:8px;background:#fff}
+.gseg{padding:10px 6px;border-right:1px solid #fff;min-width:38px;text-align:center;font-size:.8rem}
+.result{margin-top:10px;padding:10px;border-radius:9px;background:#f3f6fb}
+.quiz button{margin:4px 4px 4px 0}
+.quiz .feedback{font-weight:600;margin-top:8px}
+.choice{display:block;text-align:left;background:#f0f3f9;color:var(--ink);margin:6px 0;width:100%}
+.choice.correct{background:#dff5e8;color:#12653c}.choice.wrong{background:#ffe1e5;color:#8e2635}
+.memory{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:10px 0}
+.memcell{padding:12px 4px;text-align:center;background:#e8ecf4;border-radius:6px;font-size:.75rem}
+.memcell.active{background:#cfd9ff}
+.resource{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rbox{padding:10px;border:2px solid #9da8bb;border-radius:8px;background:#fff}
+.arrowline{font-size:1.3rem}
+footer{padding:25px 18px;color:var(--muted);border-top:1px solid var(--line)}
+@media(max-width:600px){.two{grid-template-columns:1fr}.memory{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+  <div class="badge">Freshman-friendly</div><div class="badge">Chapters 3–6 & 8</div><div class="badge">Interactive learning</div>
+  <h1>Operating Systems: See It, Try It, Understand It</h1>
+  <p>This page turns the lecture topics into small mental models, animated demonstrations and hands-on mini-simulators. Work through a chapter, predict what will happen, then use the interaction to check your thinking.</p>
+  <div class="callout" style="background:#ffffff12;border-color:#ffffff70;color:white">
+    <strong>Chapter 7 is intentionally omitted.</strong> The lecture set was excluded because it is primarily program/example based, as requested.
+  </div>
+</div>
+</header>
+
+<nav><div class="navin">
+<a href="#map">Learning Map</a><a href="#ch3">3 · Processes</a><a href="#ch4">4 · Threads</a><a href="#ch5">5 · CPU Scheduling</a><a href="#ch6">6 · Synchronization</a><a href="#ch8">8 · Deadlocks</a><a href="#quiz">Final Check</a>
+</div></nav>
+
+<main>
+<section id="map">
+<h2>🧭 Learning Map</h2>
+<div class="grid">
+<div class="card"><b>Chapter 3 → Process</b><p>A program becomes an active process. Learn states, PCB, scheduling, creation, termination and IPC.</p><span class="pill">What is running?</span><span class="pill">How do processes talk?</span></div>
+<div class="card"><b>Chapter 4 → Thread</b><p>A process can contain multiple flows of execution. Learn concurrency, parallelism and thread models.</p><span class="pill">Who does the work?</span><span class="pill">Can work happen together?</span></div>
+<div class="card"><b>Chapter 5 → CPU Scheduling</b><p>Many ready processes compete for CPU time. Learn how the scheduler decides who runs next.</p><span class="pill">Who gets CPU?</span><span class="pill">For how long?</span></div>
+<div class="card"><b>Chapter 6 → Synchronization</b><p>Concurrent processes/threads can interfere with shared data. Learn critical sections, locks and semaphores.</p><span class="pill">Who may enter?</span><span class="pill">How do we stay correct?</span></div>
+<div class="card"><b>Chapter 8 → Deadlocks</b><p>Processes can wait forever for resources. Learn characterization, prevention, avoidance, detection and recovery.</p><span class="pill">Why is everyone waiting?</span><span class="pill">How can we avoid it?</span></div>
+</div>
+<div class="callout good"><b>Study pattern:</b> <em>Observe → Predict → Interact → Explain in your own words.</em> If you can explain why an animation changes state, you understand the concept rather than memorizing a definition.</div>
+</section>
+
+<section id="ch3">
+<h2>Chapter 3 — Processes</h2>
+<p class="small">The lecture introduces the process concept, process representation and states, scheduling, process operations, IPC using shared memory/message passing, and client-server communication.</p>
+
+<div class="card">
+<h3>3.1 Program vs Process</h3>
+<p>A <b>program</b> is a passive set of instructions stored on storage. A <b>process</b> is a program in execution. A single program can have multiple processes when it is started multiple times.</p>
+<div class="scene"><div class="packet">PROGRAM</div><div style="position:absolute;left:46%;top:15px">load + execute →</div><div class="cpuDot" style="left:88%">CPU</div></div>
+<p class="small">Animation idea: the “program” becomes an active execution entity.</p>
+</div>
+
+<div class="two">
+<div class="card">
+<h3>3.2 What lives inside a process?</h3>
+<ul><li>Program code / text</li><li>Program counter and CPU registers</li><li>Stack — local data, parameters, return addresses</li><li>Data — global variables</li><li>Heap — dynamically allocated memory</li></ul>
+<div class="memory">
+<div class="memcell">Text<br>Code</div><div class="memcell">Data<br>Globals</div><div class="memcell">Heap<br>Dynamic</div><div class="memcell active">Stack<br>Calls</div><div class="memcell">PC +<br>Registers</div>
+</div>
+</div>
+<div class="card">
+<h3>3.3 Process Control Block (PCB)</h3>
+<p>Think of the PCB as the OS's <b>file card for a process</b>. It contains process state, program counter, registers, scheduling information, memory information, accounting information and I/O status.</p>
+<div class="callout">When the OS needs to stop and later resume a process, the PCB is central to preserving its context.</div>
+</div>
+</div>
+
+<div class="card">
+<h3>3.4 Process States — try moving a process</h3>
+<p>The lecture uses five basic states: <b>New, Ready, Running, Waiting, Terminated</b>.</p>
+<div class="state-row" id="stateRow">
+<div class="state" data-s="New">New</div><span>→</span><div class="state" data-s="Ready">Ready</div><span>→</span><div class="state" data-s="Running">Running</div><span>→</span><div class="state" data-s="Waiting">Waiting</div><span>→</span><div class="state" data-s="Ready">Ready</div>
+</div>
+<p><button type="button" onclick="advanceProcess()">Advance process</button> <button type="button" class="secondary" onclick="resetProcess()">Reset</button></p>
+<div id="stateMsg" class="result">Start: a process has just been created.</div>
+</div>
+
+<div class="card">
+<h3>3.5 Scheduling queues</h3>
+<p>The scheduler selects among processes ready to execute. Processes move among the ready queue and wait queues while they execute and wait for events such as I/O.</p>
+<div class="two">
+<div class="callout"><b>Ready queue</b><br>“I am ready. Give me the CPU.”</div>
+<div class="callout"><b>Wait queue</b><br>“I cannot continue until an event/I/O completes.”</div>
+</div>
+</div>
+
+<div class="card">
+<h3>3.6 Context switch — why does switching cost time?</h3>
+<p>When the CPU changes from one process to another, the OS saves the old process context and loads the new process context. The switching itself is overhead.</p>
+<div class="scene"><div class="runner">P1</div><div style="position:absolute;left:42%;top:18px;font-size:.8rem">SAVE → LOAD</div><div class="cpuDot" style="left:88%;animation-delay:.4s">P2</div></div>
+<button type="button" onclick="flashContext()">Perform context switch</button>
+<div id="ctxResult" class="result">CPU is currently executing P1.</div>
+</div>
+
+<div class="card">
+<h3>3.7 Process creation and termination</h3>
+<p>Processes can form parent-child relationships. In UNIX, <code>fork()</code> creates a new process, <code>exec()</code> replaces the process memory with another program, and <code>wait()</code> allows a parent to wait for a child.</p>
+<div class="scene"><div class="packet" style="animation:none;left:8%">Parent</div><div class="packet" style="animation:none;left:70%;background:#e7f5e9;color:#176a3e">Child</div><div style="position:absolute;left:42%;top:44px">fork() →</div></div>
+<div class="callout warn"><b>Remember:</b> <code>fork()</code> creates; <code>exec()</code> replaces the program image; <code>wait()</code> waits for a child.</div>
+</div>
+
+<div class="card">
+<h3>3.8 IPC: two ways to communicate</h3>
+<div class="two">
+<div class="card" style="margin:0"><h3>Shared Memory</h3><p>Processes communicate through a shared region of memory. It can be fast, but concurrent access requires synchronization.</p><div class="scene"><div class="packet" style="animation:none;left:8%">P1</div><div style="position:absolute;left:40%;top:36px;background:#dff5e8;padding:8px;border-radius:8px">SHARED<br>MEMORY</div><div class="packet" style="animation:none;left:82%;background:#ffe6bd;color:#8a5200">P2</div></div></div>
+<div class="card" style="margin:0"><h3>Message Passing</h3><p>Processes communicate by sending and receiving messages through an OS-supported communication mechanism.</p><div class="scene"><div class="packet">MSG</div><div style="position:absolute;left:43%;top:43px">channel</div></div></div>
+</div>
+<button type="button" onclick="ipcDemo()">Send one message</button>
+<div id="ipcResult" class="result">Choose a communication model and predict what crosses the boundary.</div>
+</div>
+
+<div class="card">
+<h3>3.9 Compare IPC methods</h3>
+<table><tr><th>Feature</th><th>Shared Memory</th><th>Message Passing</th></tr>
+<tr><td>Basic idea</td><td>Processes read/write a common memory region</td><td>Processes send and receive messages</td></tr>
+<tr><td>Communication</td><td>Indirectly through shared data</td><td>Explicit send/receive operations</td></tr>
+<tr><td>Main point to remember</td><td>Fast sharing, but concurrent access needs synchronization</td><td>Clear communication through messages and an OS-supported mechanism</td></tr></table>
+<div class="callout good"><b>Memory trick:</b> Shared memory = “we use the same notice board”; Message passing = “we send each other notes.”</div>
+</div>
+</section>
+
+<section id="ch4">
+<h2>Chapter 4 — Threads & Concurrency</h2>
+<p class="small">The lecture covers threads, multicore programming, multithreading models, thread libraries, implicit threading and threading issues.</p>
+
+<div class="card">
+<h3>4.1 Process vs Thread — the simplest mental model</h3>
+<div class="two">
+<div><p><b>Process:</b> a resource-owning execution environment.</p><div class="scene"><div class="runner" style="left:12%;animation:none">P</div><div style="position:absolute;left:38%;top:42px">resources</div></div></div>
+<div><p><b>Threads:</b> multiple flows of execution inside a process.</p><div class="scene"><div class="runner" style="animation-delay:0s">T1</div><div class="runner" style="animation-delay:.8s;top:12px">T2</div><div class="runner" style="animation-delay:1.5s;top:70px">T3</div></div></div>
+</div>
+<p>Threads can improve responsiveness, share process resources, reduce creation/switching cost compared with processes, and help a process use multicore hardware.</p>
+</div>
+
+<div class="card">
+<h3>4.2 Concurrency vs Parallelism</h3>
+<div class="two">
+<div class="card" style="margin:0"><b>Concurrency</b><p>Multiple tasks make progress, even on one CPU core through scheduling and switching.</p><div class="scene"><div class="runner" style="animation-duration:3s">A</div><div class="runner" style="animation-duration:3s;animation-delay:1.5s">B</div></div></div>
+<div class="card" style="margin:0"><b>Parallelism</b><p>Multiple tasks actually execute simultaneously on multiple cores.</p><div class="two"><div class="scene"><div class="cpuDot" style="left:50%">A</div></div><div class="scene"><div class="cpuDot" style="left:50%;animation-delay:.3s">B</div></div></div></div>
+</div>
+<p class="small">The lecture distinguishes parallel execution from concurrent progress and discusses the multicore challenges of dividing work, balancing work, splitting data, handling dependencies, and testing/debugging.</p>
+</div>
+
+<div class="card">
+<h3>4.3 Data parallelism vs Task parallelism</h3>
+<table><tr><th>Data parallelism</th><th>Task parallelism</th></tr>
+<tr><td>Split data into subsets and perform the same operation on each subset.</td><td>Split work into different tasks; each thread may perform a different operation.</td></tr></table>
+<div class="callout">Example thought experiment: “Process 1,000 pixels with the same filter” → data parallelism. “One thread reads input, another compresses, another writes output” → task parallelism.</div>
+</div>
+
+<div class="card">
+<h3>4.4 Amdahl’s Law — why more cores do not mean infinite speed</h3>
+<p>The serial part of a program limits the maximum speedup obtainable from additional cores. The lecture gives the idea that if the serial fraction is <b>S</b> and the number of cores is <b>N</b>, speedup is limited by the serial portion.</p>
+<label>Serial fraction S: <input id="serial" type="number" min="0" max="1" step="0.05" value="0.25"></label>
+<label> Cores N: <input id="cores" type="number" min="1" max="64" value="4"></label>
+<button type="button" onclick="amdahl()">Calculate</button>
+<div id="amdahlResult" class="result"></div>
+</div>
+
+<div class="card">
+<h3>4.5 User threads, kernel threads and mapping models</h3>
+<p>The lecture distinguishes user-level thread management from kernel-supported threads and introduces many-to-one, one-to-one, many-to-many and two-level models.</p>
+<div class="grid">
+<div class="card" style="margin:0"><b>Many → One</b><p>Many user threads map to one kernel thread. One blocking thread can block the whole process.</p><div class="token">U1</div><div class="token">U2</div><div class="token">U3</div><div>↓</div><div class="token">K1</div></div>
+<div class="card" style="margin:0"><b>One → One</b><p>Each user thread maps to a kernel thread.</p><div class="token">U1 → K1</div><div class="token">U2 → K2</div><div class="token">U3 → K3</div></div>
+<div class="card" style="margin:0"><b>Many → Many</b><p>Many user threads can be mapped onto many kernel threads.</p><div class="token">U1</div><div class="token">U2</div><div class="token">U3</div><br>↕<br><div class="token">K1</div><div class="token">K2</div></div>
+</div>
+</div>
+
+<div class="card">
+<h3>4.6 Implicit Threading: Let the System Manage the Threads</h3>
+<p>Creating and managing every thread yourself can become difficult when a program has many tasks. <b>Implicit threading</b> means that a library or runtime helps manage the threads for you.</p>
+<div class="two">
+<div class="card" style="margin:0">
+<h3>Thread Pool = Reusable Workers</h3>
+<p>Imagine a small team of workers waiting for jobs. When a job arrives, an available worker takes it. When the job finishes, that worker returns to the pool.</p>
+<div class="scene">
+  <div class="runner" style="animation:none;left:8%">T1</div>
+  <div class="runner" style="animation:none;left:42%;top:12px">T2</div>
+  <div class="runner" style="animation:none;left:76%;top:70px">T3</div>
+</div>
+<p class="small"><b>Why?</b> Reusing existing threads can avoid repeatedly paying the cost of creating new ones.</p>
+</div>
+<div class="card" style="margin:0">
+<h3>Fork-Join = Split → Work → Join</h3>
+<p>A large task is split into smaller tasks (<b>fork</b>). They can work in parallel. Their results are then combined (<b>join</b>).</p>
+<div class="state-row"><div class="state active">Big task</div><span>→</span><div class="state">Task A</div><div class="state">Task B</div><span>→</span><div class="state active">Combined result</div></div>
+</div>
+</div>
+<button type="button" onclick="poolDemo()">Run a 6-job / 3-thread example</button>
+<div id="pool" class="result">Click the button to see how six jobs are shared among three reusable workers.</div>
+<div class="callout"><b>Easy memory trick:</b> Thread Pool = <em>“workers waiting for jobs.”</em> Fork-Join = <em>“split the work, do it, combine the results.”</em></div>
+</div>
+
+<div class="card">
+<h3>4.6A Compare the thread and execution concepts</h3>
+<table><tr><th>Concept</th><th>What it means</th><th>Simple example</th></tr>
+<tr><td>Process</td><td>An executing program with its own process resources</td><td>A browser application</td></tr>
+<tr><td>Thread</td><td>A flow of execution inside a process</td><td>One browser thread handling UI work</td></tr>
+<tr><td>Concurrency</td><td>Multiple tasks make progress, possibly by taking turns on one core</td><td>Chat app switches between several tasks</td></tr>
+<tr><td>Parallelism</td><td>Multiple tasks actually execute at the same time on multiple cores</td><td>Two computations running on two cores</td></tr>
+<tr><td>Data parallelism</td><td>Same operation applied to different pieces of data</td><td>Process different image regions</td></tr>
+<tr><td>Task parallelism</td><td>Different tasks operate concurrently</td><td>One task reads data while another analyzes it</td></tr></table>
+</div>
+</section>
+
+<section id="ch5">
+<h2>Chapter 5 — CPU Scheduling</h2>
+<p class="small">The lecture covers scheduling concepts and criteria, FCFS, SJF/SRTF, Round Robin, Priority, multilevel queues/feedback queues, multiprocessor scheduling, real-time scheduling and algorithm evaluation.</p>
+
+<div class="card">
+<h3>5.1 What is the scheduler deciding?</h3>
+<p>The CPU scheduler selects a process from the ready queue and allocates a CPU core to it. Scheduling decisions can occur when processes switch between running, waiting, ready, or termination states; the lecture distinguishes preemptive and nonpreemptive cases.</p>
+<div class="callout"><b>Think like the scheduler:</b> “Several processes are waiting. Which one should run next, and what criterion should guide the choice?”</div>
+</div>
+
+<div class="card">
+<h3>5.2 Scheduling criteria</h3>
+<div class="grid">
+<div class="card" style="margin:0"><b>CPU utilization</b><p>Keep CPU busy.</p></div>
+<div class="card" style="margin:0"><b>Throughput</b><p>Completed processes per unit time.</p></div>
+<div class="card" style="margin:0"><b>Turnaround</b><p>Time from submission to completion.</p></div>
+<div class="card" style="margin:0"><b>Waiting</b><p>Time spent waiting in the ready queue.</p></div>
+<div class="card" style="margin:0"><b>Response</b><p>Time until the first response.</p></div>
+</div>
+<p>Optimization generally seeks high utilization/throughput and low turnaround, waiting and response time.</p>
+</div>
+
+<div class="card">
+<h3>5.3 Try a CPU scheduling simulator</h3>
+<p>Use the small workload below. Burst times are CPU time units. For Round Robin, choose a quantum. <b>Try the same workload with different algorithms and compare the Gantt chart and waiting time.</b></p>
+<table id="procTable"><tr><th>Process</th><th>Burst</th><th>Arrival</th><th>Priority</th></tr>
+<tr><td>P1</td><td>7</td><td>0</td><td>2</td></tr>
+<tr><td>P2</td><td>4</td><td>0</td><td>1</td></tr>
+<tr><td>P3</td><td>3</td><td>1</td><td>3</td></tr>
+<tr><td>P4</td><td>5</td><td>2</td><td>2</td></tr></table>
+<select id="algo"><option value="fcfs">FCFS</option><option value="sjf">SJF (nonpreemptive)</option><option value="srtf">SRTF</option><option value="rr">Round Robin</option><option value="priority">Priority (nonpreemptive)</option></select>
+<label> Quantum <input id="quantum" type="number" min="1" value="2"></label>
+<button type="button" onclick="simulate()">Schedule</button>
+<div id="schedOut" class="result">Choose an algorithm and click Schedule.</div>
+</div>
+
+<div class="two">
+<div class="card"><h3>FCFS — “Who came first?”</h3><p>Processes run in arrival order. It is simple and non-preemptive. Example: if P1 needs 10 ms and P2 needs 2 ms, P2 waits behind P1 even though it is short. This can create the <b>convoy effect</b>.</p></div>
+<div class="card"><h3>SJF — “Who needs the least CPU time?”</h3><p>Among available processes, choose the one with the shortest predicted next CPU burst. It is non-preemptive. Example: P1=10 ms, P2=2 ms, P3=4 ms → P2 runs first.</p></div>
+<div class="card"><h3>SRTF — “Who has the least time left?”</h3><p>SRTF is the <b>preemptive</b> form of SJF. If a new process arrives whose remaining burst is shorter than the currently running process, the CPU can switch to the new process.</p></div>
+<div class="card"><h3>Round Robin — “Take turns”</h3><p>Each ready process receives a fixed <b>time quantum</b>. Example with q=2 ms: P1 runs 2 ms, then P2 runs 2 ms, then P3, then back to P1 if work remains. A smaller quantum usually improves response but causes more context switches.</p></div>
+<div class="card"><h3>Priority — “Who has higher priority?”</h3><p>Each process has a priority value. The CPU selects the highest-priority process; in the lecture's convention, a smaller integer means higher priority. It may be preemptive or non-preemptive. <b>Aging</b> can reduce starvation.</p></div>
+</div>
+
+<div class="card">
+<h3>5.3A Compare the CPU scheduling algorithms</h3>
+<p>Use this table after learning each algorithm. The question to ask is: <b>“What rule decides who runs next?”</b></p>
+<table>
+<tr><th>Algorithm</th><th>Selection rule</th><th>Preemptive?</th><th>Main strength</th><th>Main concern</th><th>Easy example</th></tr>
+<tr><td><b>FCFS</b></td><td>Earliest arrival first</td><td>No</td><td>Very simple</td><td>Convoy effect; poor response for short jobs behind long jobs</td><td>People served in a queue</td></tr>
+<tr><td><b>SJF</b></td><td>Shortest next CPU burst</td><td>No</td><td>Minimum average waiting time when burst lengths are known</td><td>Next burst length must be predicted/known</td><td>Serve the shortest task first</td></tr>
+<tr><td><b>SRTF</b></td><td>Shortest remaining CPU time</td><td>Yes</td><td>Can react when a shorter job arrives</td><td>More switching; remaining time must be estimated</td><td>Switch to a newly arrived shorter task</td></tr>
+<tr><td><b>Round Robin</b></td><td>Take turns using a time quantum</td><td>Yes</td><td>Good response for interactive systems</td><td>Very small quantum creates high switching overhead</td><td>Everyone gets 2 minutes in turn</td></tr>
+<tr><td><b>Priority</b></td><td>Highest priority first</td><td>Either</td><td>Important work can be served first</td><td>Low-priority starvation</td><td>Emergency task before routine task</td></tr>
+</table>
+<div class="callout good"><b>Memory trick:</b> FCFS = <em>arrival</em>; SJF = <em>shortest job</em>; SRTF = <em>shortest remaining time</em>; RR = <em>turn-taking</em>; Priority = <em>importance</em>.</div>
+</div>
+
+<div class="card">
+<h3>5.4 Multilevel Queue — Which Queue Gets the CPU?</h3>
+<p>Think of the ready queue as being divided into separate queues. Each queue can represent a different class of work. The scheduler first considers the higher-priority queue before moving to a lower-priority queue.</p>
+
+<div class="grid">
+  <div class="card" style="margin:0;border-top:4px solid #d65a5a">
+    <b>Q0 — Interactive / High Priority</b>
+    <p class="small">Example: a user-interface task.</p>
+    <div id="q0items" class="result">P1</div>
+  </div>
+  <div class="card" style="margin:0;border-top:4px solid #d6a13c">
+    <b>Q1 — System</b>
+    <p class="small">Example: background system service.</p>
+    <div id="q1items" class="result">P2, P4</div>
+  </div>
+  <div class="card" style="margin:0;border-top:4px solid #5a8fd6">
+    <b>Q2 — Batch / Lower Priority</b>
+    <p class="small">Example: long background computation.</p>
+    <div id="q2items" class="result">P3</div>
+  </div>
+</div>
+
+<div class="callout">
+  <b>Rule:</b> If Q0 has a ready process, it gets the CPU before Q1 and Q2. If Q0 is empty, the scheduler checks Q1, then Q2.
+</div>
+
+<button type="button" onclick="runMLQ()">Run one scheduling decision</button>
+<button type="button" class="secondary" onclick="resetMLQ()">Reset</button>
+<div id="mlqResult" class="result" aria-live="polite">Click “Run one scheduling decision” to let the scheduler choose the next process.</div>
+
+<h3 style="margin-top:20px">Now compare it with Multilevel Feedback Queue (MLFQ)</h3>
+<p>In an MLFQ, a process is allowed to <b>move between queues</b>. A new job may start in a high-priority queue. If it uses its full time slice without finishing, it can be moved to a lower queue. This allows short/interactive work to receive quick service while longer work gradually moves down.</p>
+<div class="state-row">
+  <div class="state active">Q0<br><span class="small">RR, 8 ms</span></div>
+  <span>if unfinished →</span>
+  <div class="state">Q1<br><span class="small">RR, 16 ms</span></div>
+  <span>if still unfinished →</span>
+  <div class="state">Q2<br><span class="small">FCFS</span></div>
+</div>
+<button type="button" onclick="runMLFQ()">Animate a long job moving through MLFQ</button>
+<div id="mlfqResult" class="result" aria-live="polite">The job starts in Q0.</div>
+</div>
+</section>
+
+<section id="ch6">
+<h2>Chapter 6 — Synchronization Tools</h2>
+<p class="small">The lecture introduces process synchronization, race conditions, the critical-section problem, Peterson’s solution, hardware support, mutex locks, semaphores and monitors.</p>
+
+<div class="card">
+<h3>6.1 Why synchronization is necessary</h3>
+<p>Concurrent processes can be interrupted at any time. If they access shared data without coordination, the final value can depend on the order of operations. The lecture demonstrates this using a producer-consumer counter.</p>
+<button type="button" onclick="raceDemo()">Run race-condition example</button>
+<div id="race" class="result">Counter starts at 5. Click to interleave producer + consumer operations.</div>
+</div>
+
+<div class="card">
+<h3>6.2 Critical section</h3>
+<p>A critical section is the part of a process that accesses shared data or resources. The central requirement is that two processes must not execute conflicting critical sections simultaneously.</p>
+<div class="state-row">
+<div class="state">Entry</div><span>→</span><div class="state active">🔒 Critical Section</div><span>→</span><div class="state">Exit</div><span>→</span><div class="state">Remainder</div>
+</div>
+<h3>Three requirements</h3>
+<div class="grid"><div class="callout"><b>Mutual exclusion</b><br>At most one process is inside.</div><div class="callout"><b>Progress</b><br>If nobody is inside, a waiting process should not be postponed forever.</div><div class="callout"><b>Bounded waiting</b><br>A waiting process should have a bound on how many times others enter first.</div></div>
+<p>These three requirements are explicitly presented in the lecture.</p>
+</div>
+
+<div class="card">
+<h3>6.3 Peterson’s solution — understand <code>flag</code> and <code>turn</code> first</h3>
+<p>Peterson’s solution is a two-process method for protecting a critical section. Before looking at the code, understand the two shared pieces of information.</p>
+<div class="two">
+<div class="card" style="margin:0"><h3><code>flag[2]</code> = “Do I want to enter?”</h3><p>There is one Boolean flag for each process:</p><ul><li><code>flag[0] = true</code> means <b>P0 wants to enter</b> the critical section.</li><li><code>flag[1] = true</code> means <b>P1 wants to enter</b> the critical section.</li><li><code>false</code> means that process is not currently trying to enter.</li></ul><div class="callout">Think of <code>flag</code> as two “I am waiting” signs.</div></div>
+<div class="card" style="margin:0"><h3><code>turn</code> = “If both want in, who gets the chance?”</h3><p><code>turn</code> stores either <code>0</code> or <code>1</code>. If both processes want to enter at the same time, it breaks the tie.</p><div class="callout">Think of <code>turn</code> as a “you go first” token.</div></div>
+</div>
+<p><b>Example:</b> P0 sets <code>flag[0]=true</code> because it wants to enter. P1 does the same with <code>flag[1]=true</code>. They then use <code>turn</code> so that both cannot enter the critical section together. One gets the turn; the other waits until the first process leaves.</p>
+<div class="callout warn"><b>Why both variables?</b> <code>flag</code> tells us <em>whether someone wants to enter</em>; <code>turn</code> helps decide <em>who waits when both want to enter</em>.</div>
+<div class="card" style="margin:14px 0"><h3>Then read the algorithm</h3><pre>flag[i] = true;
+turn = j;
+while (flag[j] &amp;&amp; turn == j) { }
+
+// critical section
+
+flag[i] = false;</pre><p>For P0, <code>i=0</code> and <code>j=1</code>. P0 announces “I want in,” gives P1 the turn, and waits only while P1 also wants in <b>and</b> it is P1’s turn.</p></div>
+<label style="display:block;margin:8px 0"><input type="checkbox" id="p0want"> P0 wants to enter</label>
+<label style="display:block;margin:8px 0"><input type="checkbox" id="p1want"> P1 wants to enter</label>
+<button type="button" onclick="peterson()">Check</button>
+<div id="petersonOut" class="result">Select which processes want to enter.</div>
+</div>
+
+<div class="card">
+<h3>6.4 Locks and atomic hardware</h3>
+<p>Hardware can provide atomic operations such as <code>test_and_set</code> and <code>compare_and_swap</code>. A mutex lock uses an acquire/release idea to protect a critical section.</p>
+<div class="scene"><div class="lockDot" id="lockDot" style="left:10%">🔒</div><div style="position:absolute;left:35%;top:42px">critical section</div></div>
+<button type="button" onclick="toggleLock()">Acquire / Release mutex</button>
+<div id="lockOut" class="result">Mutex is free.</div>
+</div>
+
+<div class="card">
+<h3>6.5 Semaphore — think of it as a counter of permission</h3>
+<p>A semaphore can be used to coordinate access to shared resources. For a simple counting semaphore, <code>wait()</code> consumes one available permit and <code>signal()</code> returns one.</p>
+<label>Permits: <input id="sem" type="number" min="0" max="5" value="2"></label>
+<button type="button" onclick="semWait()">wait()</button><button type="button" class="secondary" onclick="semSignal()">signal()</button>
+<div id="semOut" class="result">Two permits are available.</div>
+</div>
+
+<div class="callout warn"><b>Freshman shortcut:</b> Race condition = “the answer changes depending on timing.” Critical section = “the sensitive part.” Mutex/semaphore = “rules that control who may enter/use the shared resource.”</div>
+
+<div class="card">
+<h3>6.6 Compare synchronization mechanisms</h3>
+<table><tr><th>Mechanism</th><th>Main idea</th><th>Best way to picture it</th><th>Key point</th></tr>
+<tr><td>Peterson’s solution</td><td>Two processes coordinate using shared <code>flag</code> and <code>turn</code></td><td>Two people politely deciding who enters first</td><td>Algorithmic solution for two processes under its assumptions</td></tr>
+<tr><td>Mutex / Lock</td><td>Only the thread/process holding the lock enters the protected critical section</td><td>One key for one room</td><td>Acquire before entering; release after leaving</td></tr>
+<tr><td>Semaphore</td><td>Uses a counter/permit mechanism with <code>wait()</code> and <code>signal()</code></td><td>Limited number of entry tickets</td><td>Can coordinate one or multiple available resources</td></tr>
+</table>
+<div class="callout good"><b>Memory trick:</b> Peterson = <em>two-process algorithm</em>; Mutex = <em>one lock</em>; Semaphore = <em>permission counter</em>.</div>
+</div>
+</section>
+
+<section id="ch8">
+<h2>Chapter 8 — Deadlocks</h2>
+<p class="small">The lecture covers the system model, deadlock characterization, prevention, avoidance, safe states, resource-allocation graphs, Banker’s algorithm, detection and recovery.</p>
+
+<div class="card">
+<h3>8.1 What is a deadlock?</h3>
+<p>Imagine two people each holding something the other needs. Neither can continue, so neither releases what they hold. An OS deadlock is the resource-allocation version of this situation.</p>
+<div class="two">
+<div class="scene"><div class="rbox" style="position:absolute;left:8%;top:34px">P1</div><div class="rbox" style="position:absolute;left:73%;top:34px">P2</div><div style="position:absolute;left:31%;top:44px">holds R1 → needs R2</div><div style="position:absolute;left:31%;top:70px">holds R2 → needs R1</div></div>
+<div class="callout">Deadlock requires four conditions simultaneously: mutual exclusion, hold-and-wait, no preemption, and circular wait.</div>
+</div>
+</div>
+
+<div class="card">
+<h3>8.2 The four necessary conditions — turn them off</h3>
+<div class="grid" id="conditions">
+<label class="card" style="margin:0"><input type="checkbox" checked> Mutual exclusion<br><span class="small">Only one process can use a non-shareable resource at a time.</span></label>
+<label class="card" style="margin:0"><input type="checkbox" checked> Hold and wait<br><span class="small">A process holds one resource while waiting for another.</span></label>
+<label class="card" style="margin:0"><input type="checkbox" checked> No preemption<br><span class="small">A resource is not forcibly taken away.</span></label>
+<label class="card" style="margin:0"><input type="checkbox" checked> Circular wait<br><span class="small">Processes form a waiting cycle.</span></label>
+</div>
+<button type="button" onclick="deadlockCheck()">Check deadlock possibility</button>
+<div id="deadlockOut" class="result"></div>
+</div>
+
+<div class="card">
+<h3>8.3 Resource-allocation graph</h3>
+<p>Processes and resource types are vertices. A request edge points <b>Process → Resource</b>; an assignment edge points <b>Resource → Process</b>.</p>
+<div class="resource">
+<div class="rbox">P1</div><span class="arrowline">→ requests →</span><div class="rbox">R2</div>
+<span class="arrowline">↔</span><div class="rbox">R1</div><span class="arrowline">→</span><div class="rbox">P2</div>
+</div>
+<p class="small">With one instance per resource type, a cycle indicates deadlock; with multiple instances, a cycle indicates the possibility of deadlock rather than proving it.</p>
+</div>
+
+<div class="card">
+<h3>8.4 Compare the deadlock-handling approaches</h3>
+<table><tr><th>Approach</th><th>Core question</th><th>Basic idea</th><th>Easy way to remember</th></tr>
+<tr><td>Prevention</td><td>Can we break a necessary condition?</td><td>Design the system so at least one of the four necessary conditions cannot hold.</td><td>“Stop the ingredients.”</td></tr>
+<tr><td>Avoidance</td><td>Is this resource request safe?</td><td>Grant requests only when the resulting state remains safe; Banker’s algorithm is the classic example.</td><td>“Check before committing.”</td></tr>
+<tr><td>Detection</td><td>Has deadlock already happened?</td><td>Allow resource allocation, then run a detection method to find deadlock.</td><td>“Let it happen, then detect.”</td></tr>
+<tr><td>Recovery</td><td>What do we do after detection?</td><td>Take recovery action such as terminating processes or preempting resources, depending on the system strategy.</td><td>“Break the deadlock.”</td></tr></table>
+</div>
+
+<div class="card">
+<h3>8.4 Three strategies</h3>
+<div class="grid">
+<div class="card" style="margin:0"><b>Prevention</b><p>Restrict how requests can be made so at least one necessary condition cannot hold.</p></div>
+<div class="card" style="margin:0"><b>Avoidance</b><p>Examine each allocation and keep the system in a safe state.</p></div>
+<div class="card" style="margin:0"><b>Detection + Recovery</b><p>Allow deadlocks to occur, detect them, then recover.</p></div>
+</div>
+<p>The lecture also notes a fourth practical approach: some systems simply ignore the problem rather than continually paying the cost of sophisticated handling.</p>
+</div>
+
+<div class="card">
+<h3>8.5 Safe vs unsafe — interactive mini-check</h3>
+<p>A <b>safe state</b> has an ordering in which every process can obtain what it still needs, finish, and release resources for the next process. An unsafe state means deadlock is possible, not that deadlock has already occurred.</p>
+<select id="safeChoice">
+<option value="safe">Available resources can satisfy P2, then P1, then P3</option>
+<option value="unsafe">P1, P2 and P3 each need a resource currently held by another</option>
+</select>
+<button type="button" onclick="safeCheck()">Evaluate</button>
+<div id="safeOut" class="result"></div>
+</div>
+
+<div class="card">
+<h3>8.6 Banker’s Algorithm — the banker's question</h3>
+<p>For multiple instances of resource types, the lecture introduces Banker’s algorithm. Its key data structures are <b>Available, Max, Allocation, Need</b>, with <code>Need = Max − Allocation</code>.</p>
+<div class="callout">Imagine a bank: “If I grant this loan now, can every customer still eventually finish? If yes, the state is safe. If not, make the customer wait.”</div>
+</div>
+</section>
+
+<section id="quiz">
+<h2>Final Concept Check</h2>
+<div class="quiz card" id="q1">
+<h3>1. A program becomes a process when…</h3>
+<button class="choice" onclick="q(this,false)">it is saved on disk</button>
+<button class="choice" onclick="q(this,true)">it is loaded and begins execution</button>
+<button class="choice" onclick="q(this,false)">it is renamed</button><div class="feedback"></div>
+</div>
+<div class="quiz card" id="q2">
+<h3>2. Which statement best describes parallelism?</h3>
+<button class="choice" onclick="q(this,false)">Tasks take turns on one core</button>
+<button class="choice" onclick="q(this,true)">Tasks execute simultaneously on multiple cores</button>
+<button class="choice" onclick="q(this,false)">Processes are always blocked</button><div class="feedback"></div>
+</div>
+<div class="quiz card" id="q3">
+<h3>3. In Round Robin, the key control parameter is…</h3>
+<button class="choice" onclick="q(this,true)">time quantum</button>
+<button class="choice" onclick="q(this,false)">PCB size</button>
+<button class="choice" onclick="q(this,false)">number of files</button><div class="feedback"></div>
+</div>
+<div class="quiz card" id="q4">
+<h3>4. A race condition occurs when…</h3>
+<button class="choice" onclick="q(this,false)">a program has no loops</button>
+<button class="choice" onclick="q(this,true)">the result depends on the timing/interleaving of concurrent accesses</button>
+<button class="choice" onclick="q(this,false)">the CPU is idle</button><div class="feedback"></div>
+</div>
+<div class="quiz card" id="q5">
+<h3>5. Which is NOT one of the four necessary deadlock conditions?</h3>
+<button class="choice" onclick="q(this,false)">Hold and wait</button>
+<button class="choice" onclick="q(this,true)">Fast CPU</button>
+<button class="choice" onclick="q(this,false)">Circular wait</button><div class="feedback"></div>
+</div>
+<div class="callout good"><b>Self-test:</b> Close this page and explain, without notes: <em>process → thread → scheduling → synchronization → deadlock</em>. If you can connect the five ideas as one story, you have the core architecture in place.</div>
+</section>
+
+<section>
+<h2>One-page mental model</h2>
+<div class="card">
+<table>
+<tr><th>Question</th><th>OS concept</th><th>Freshman explanation</th></tr>
+<tr><td>What is doing the work?</td><td>Process / Thread</td><td>Process is an executing program; threads are flows of execution inside a process.</td></tr>
+<tr><td>Who gets the CPU?</td><td>CPU Scheduler</td><td>Chooses a ready process according to a scheduling policy.</td></tr>
+<tr><td>Why can answers become wrong?</td><td>Race condition</td><td>Concurrent operations can interleave in an unsafe way.</td></tr>
+<tr><td>How do we protect shared data?</td><td>Critical section / Mutex / Semaphore</td><td>Control entry to sensitive shared operations.</td></tr>
+<tr><td>Why can the system freeze?</td><td>Deadlock</td><td>Processes can wait forever for resources held by one another.</td></tr>
+<tr><td>How do we avoid deadlock?</td><td>Prevention / Avoidance / Detection & Recovery</td><td>Break a necessary condition, stay safe, or detect and recover.</td></tr>
+</table>
+</div>
+</section>
+
+</main>
+<footer>
+<p><b>Operating Systems Interactive Learning — Chapters 3, 4, 5, 6 and 8</b></p>
+<p>This learning page is based on the uploaded lecture decks and deliberately excludes Chapter 7 as requested. The interactive examples are teaching aids designed to make the lecture concepts easier to visualize; they are not replacements for the formal lecture definitions or laboratory programs.</p>
+</footer>
+
+<script>
+let processStep=0;
+const processStates=["New","Ready","Running","Waiting","Ready","Running","Terminated"];
+function renderProcess(){
+ const els=[...document.querySelectorAll("#stateRow .state")];
+ els.forEach(e=>e.classList.remove("active"));
+ const map=[0,1,2,3,4];
+ if(processStep<map.length) els[map[processStep]].classList.add("active");
+ const msg=[
+ "The process has been created: New.",
+ "The process is waiting in the Ready queue.",
+ "The scheduler has assigned the CPU: Running.",
+ "The process requested an event/I/O and is Waiting.",
+ "The event completed: the process returns to Ready."
+ ][processStep] || "Think about the next scheduling event.";
+ document.getElementById("stateMsg").textContent=msg;
+}
+function advanceProcess(){processStep=Math.min(processStep+1,4);renderProcess()}
+function resetProcess(){processStep=0;renderProcess()}
+function flashContext(){
+ const e=document.getElementById("ctxResult");
+ e.textContent="Context switch: save P1 state → load P2 state → continue P2. The switch consumes time but performs no application work.";
+ e.style.background="#fff6e8"; setTimeout(()=>e.style.background="",700)
+}
+function ipcDemo(){document.getElementById("ipcResult").textContent="Message passed: Producer → communication mechanism → Consumer. In shared memory, both processes access a shared region instead."}
+function amdahl(){
+ let S=parseFloat(document.getElementById("serial").value), N=parseInt(document.getElementById("cores").value);
+ let speed=1/(S+(1-S)/N), limit=1/S;
+ document.getElementById("amdahlResult").innerHTML=`Estimated speedup = <b>${speed.toFixed(2)}×</b>. With infinitely many cores, the theoretical limit from the serial fraction is about <b>${limit.toFixed(2)}×</b>.`;
+}
+function poolDemo(){
+ let jobs=["J1","J2","J3","J4","J5","J6"], workers=[[],[],[]];
+ jobs.forEach((j,i)=>workers[i%3].push(j));
+ document.getElementById("pool").innerHTML=workers.map((w,i)=>`<b>Thread ${i+1}:</b> ${w.join(" → ")}`).join("<br>")+"<br><span class='small'>The pool reuses three worker threads instead of creating six threads for six jobs.</span>";
+}
+function parseProcesses(){
+ return [
+  {id:"P1",burst:7,arrival:0,priority:2},
+  {id:"P2",burst:4,arrival:0,priority:1},
+  {id:"P3",burst:3,arrival:1,priority:3},
+  {id:"P4",burst:5,arrival:2,priority:2}
+ ];
+}
+function simulate(){
+ const ps=parseProcesses(), algo=document.getElementById("algo").value, q=Math.max(1,+document.getElementById("quantum").value||1);
+ let t=0, rem=Object.fromEntries(ps.map(p=>[p.id,p.burst])), done=new Set(), seg=[];
+ function ready(){return ps.filter(p=>p.arrival<=t && rem[p.id]>0)}
+ if(algo==="rr"){
+   let queue=[], seen=new Set(), currentTime=0;
+   while(done.size<ps.length){
+     ps.filter(p=>p.arrival<=currentTime && rem[p.id]>0 && !seen.has(p.id)).forEach(p=>{queue.push(p);seen.add(p.id)});
+     if(!queue.length){currentTime++;continue}
+     let p=queue.shift(), run=Math.min(q,rem[p.id]);
+     seg.push([p.id,currentTime,currentTime+run]); currentTime+=run; rem[p.id]-=run;
+     ps.filter(x=>x.arrival<=currentTime && rem[x.id]>0 && !seen.has(x.id)).forEach(x=>{queue.push(x);seen.add(x.id)});
+     if(rem[p.id]>0) queue.push(p); else done.add(p.id);
+   }
+ }else{
+   while(done.size<ps.length){
+     let r=ready().filter(p=>!done.has(p.id));
+     if(!r.length){t++;continue}
+     let p;
+     if(algo==="fcfs") p=r.sort((a,b)=>a.arrival-b.arrival || a.id.localeCompare(b.id))[0];
+     if(algo==="sjf") p=r.sort((a,b)=>a.burst-b.burst || a.arrival-b.arrival)[0];
+     if(algo==="priority") p=r.sort((a,b)=>a.priority-b.priority || a.arrival-b.arrival)[0];
+     if(algo==="srtf") p=r.sort((a,b)=>rem[a.id]-rem[b.id] || a.arrival-b.arrival)[0];
+     let run=algo==="srtf"?1:rem[p.id];
+     seg.push([p.id,t,t+run]);t+=run;rem[p.id]-=run;
+     if(rem[p.id]===0)done.add(p.id);
+   }
+ }
+ let merged=[]; seg.forEach(s=>{let last=merged[merged.length-1]; if(last&&last[0]===s[0]&&last[2]===s[1])last[2]=s[2];else merged.push([...s])});
+ let finish={}, first={}; merged.forEach(s=>{if(first[s[0]]===undefined)first[s[0]]=s[1];finish[s[0]]=s[2]});
+ let metrics=ps.map(p=>({id:p.id,wait:finish[p.id]-p.arrival-p.burst,response:first[p.id]-p.arrival,turn:finish[p.id]-p.arrival}));
+ let aw=metrics.reduce((a,b)=>a+b.wait,0)/ps.length, ar=metrics.reduce((a,b)=>a+b.response,0)/ps.length, at=metrics.reduce((a,b)=>a+b.turn,0)/ps.length;
+ let html='<div class="gantt">'+merged.map(s=>`<div class="gseg" style="flex:${s[2]-s[1]};background:#dfe7ff">${s[0]}<br><span class="small">${s[1]}–${s[2]}</span></div>`).join("")+'</div>';
+ html+=`<p>Average waiting = <b>${aw.toFixed(2)}</b> | Average response = <b>${ar.toFixed(2)}</b> | Average turnaround = <b>${at.toFixed(2)}</b></p>`;
+ html+='<table><tr><th>Process</th><th>Waiting</th><th>Response</th><th>Turnaround</th></tr>'+metrics.map(m=>`<tr><td>${m.id}</td><td>${m.wait}</td><td>${m.response}</td><td>${m.turn}</td></tr>`).join("")+'</table>';
+ document.getElementById("schedOut").innerHTML=html;
+}
+
+let mlqTurn = 0;
+function runMLQ(){
+  const decisions = [
+    ["P1", "Q0", "P1 is in the highest-priority ready queue, so it gets the CPU first."],
+    ["P2", "Q1", "Q0 is now empty, so the scheduler checks Q1 and selects P2."],
+    ["P4", "Q1", "P4 is next in Q1 after P2."],
+    ["P3", "Q2", "The higher queues are empty, so the scheduler finally selects P3 from Q2."]
+  ];
+  const d = decisions[mlqTurn % decisions.length];
+  document.getElementById("mlqResult").innerHTML =
+    `<b>Scheduler chose ${d[0]} from ${d[1]}.</b><br>${d[2]}`;
+  mlqTurn++;
+}
+function resetMLQ(){
+  mlqTurn = 0;
+  document.getElementById("mlqResult").textContent =
+    "Click “Run one scheduling decision” to let the scheduler choose the next process.";
+}
+let mlfqStep = 0;
+function runMLFQ(){
+  const steps = [
+    "Step 1: The new job enters Q0 and receives up to 8 ms of CPU time.",
+    "Step 2: The job did not finish, so it moves down from Q0 to Q1.",
+    "Step 3: In Q1 it receives up to 16 additional ms.",
+    "Step 4: If it still does not finish, it moves to Q2, where FCFS is used."
+  ];
+  document.getElementById("mlfqResult").textContent = steps[mlfqStep % steps.length];
+  mlfqStep++;
+}
+
+function raceDemo(){
+ let html="<b>Interleaving:</b><br>S0: counter=5<br>S1: producer reads 5 → local=6<br>S2: consumer reads 5 → local=4<br>S3: producer writes 6<br>S4: consumer writes 4<br><br><b>Final counter = 4</b>, although one increment and one decrement should have cancelled each other and returned to 5. This is a race condition caused by unsafe interleaving.";
+ document.getElementById("race").innerHTML=html;
+}
+function peterson(){
+ let a=document.getElementById("p0want").checked,b=document.getElementById("p1want").checked;
+ document.getElementById("petersonOut").textContent = a&&b ? "Both want to enter. Peterson's turn/flag protocol determines which one waits so both do not enter the critical section together." : a||b ? "Only one process wants to enter, so it can proceed." : "Neither process requests the critical section.";
+}
+let lock=false;
+function toggleLock(){lock=!lock;document.getElementById("lockOut").textContent=lock?"Mutex acquired: another thread must wait.":"Mutex released: the protected resource is available."}
+function semWait(){
+ let e=document.getElementById("sem"),v=+e.value;
+ if(v>0){e.value=v-1;document.getElementById("semOut").textContent=`wait(): one permit consumed. ${v-1} permit(s) remain.`}
+ else document.getElementById("semOut").textContent="wait(): no permit is available, so a thread would have to wait.";
+}
+function semSignal(){let e=document.getElementById("sem"),v=Math.min(5,+e.value+1);e.value=v;document.getElementById("semOut").textContent=`signal(): one permit returned. ${v} permit(s) available.`}
+function deadlockCheck(){
+ let on=[...document.querySelectorAll("#conditions input")].filter(x=>x.checked).length;
+ document.getElementById("deadlockOut").textContent=on===4?"All four necessary conditions are present: deadlock is possible.":"At least one necessary condition is absent: the classic four-condition deadlock characterization is not satisfied.";
+}
+function safeCheck(){
+ let v=document.getElementById("safeChoice").value;
+ document.getElementById("safeOut").textContent=v==="safe"?"Safe-state reasoning: a completion order exists, so resources can be released step by step.":"Unsafe-state reasoning: the system may become deadlocked; unsafe does not automatically mean deadlock has already occurred.";
+}
+function q(btn,correct){
+ let box=btn.parentElement, all=box.querySelectorAll(".choice"); all.forEach(x=>x.disabled=true);
+ btn.classList.add(correct?"correct":"wrong");
+ box.querySelector(".feedback").textContent=correct?"Correct — good reasoning!":"Not quite. Re-read the chapter mental model and try the next question.";
+}
+amdahl(); renderProcess(); deadlockCheck();
+</script>
+</body>
+</html>
